@@ -1,0 +1,221 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: trit-poc
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: worker1
+spec:
+  replicas: 1
+  minReadySeconds: 10
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      name: worker1
+      labels:
+        app: worker1
+    spec:
+      containers:
+        - image: dannylesnik/worker:latest
+          name: worker1
+          readinessProbe:
+            periodSeconds: 1
+            httpGet:
+              path: /response
+              port: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: worker1
+spec:
+  ports:
+    - name: worker1
+      port: 8080
+  selector:
+    app: worker1
+  type: ClusterIP
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: worker2
+spec:
+  replicas: 1
+  minReadySeconds: 10
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      name: worker2
+      labels:
+        app: worker2
+    spec:
+      containers:
+        - image: dannylesnik/worker:latest
+          name: worker2
+          readinessProbe:
+            periodSeconds: 1
+            httpGet:
+              path: /response
+              port: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: worker2
+spec:
+  ports:
+    - name: worker2
+      port: 8080
+  selector:
+    app: worker2
+  type: ClusterIP
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: worker3
+spec:
+  replicas: 1
+  minReadySeconds: 10
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      name: worker3
+      labels:
+        app: worker3
+    spec:
+      containers:
+        - image: dannylesnik/worker:latest
+          name: worker3
+          readinessProbe:
+            periodSeconds: 1
+            httpGet:
+              path: /response
+              port: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: worker3
+spec:
+  ports:
+    - name: worker3
+      port: 8080
+  selector:
+    app: worker3
+  type: ClusterIP
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: worker4
+spec:
+  replicas: 1
+  minReadySeconds: 10
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      name: worker4
+      labels:
+        app: worker4
+    spec:
+      containers:
+        - image: dannylesnik/worker:latest
+          name: worker4
+          readinessProbe:
+            periodSeconds: 1
+            httpGet:
+              path: /response
+              port: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: worker4
+spec:
+  ports:
+    - name: worker4
+      port: 8080
+  selector:
+    app: worker4
+  type: ClusterIP
+
+
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: orchestrator
+spec:
+  replicas: 1
+  minReadySeconds: 10
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      name: orchestrator
+      labels:
+        app: orchestrator
+    spec:
+      containers:
+        - image: dannylesnik/orchestrator:latest
+          name: orchestrator
+          volumeMounts:
+            - mountPath: /opt/docker/conf/prod.conf
+              subPath: prod.conf
+              name: orchestrator-properties-volume
+          readinessProbe:
+            periodSeconds: 1
+            httpGet:
+              path: /isalive
+              port: 9000
+      volumes:
+        - name: orchestrator-properties-volume
+          configMap:
+            name:  orchestrator-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: orchestrator
+spec:
+  type: LoadBalancer
+  selector:
+    app: orchestrator
+  ports:
+    - port: 8080
+      targetPort: 9000
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: orchestrator-config
+  namespace: trit-poc
+data:
+  prod.conf: |
+    app.worker1="http://worker1:8080/response"
+    app.worker2="http://worker2:8080/response"
+    app.worker3="http://worker3:8080/response"
+    app.worker4="http://worker4:8080/response"
