@@ -13,7 +13,7 @@ object DockerSettings {
     dockerChmodType in Docker := DockerChmodType.UserGroupWriteExecute,
     dockerChmodType := DockerChmodType.UserGroupWriteExecute,
     daemonGroup := "root",
-    dockerRepository in Docker := Some("113379206287.dkr.ecr.us-east-1.amazonaws.com/development/codebuild-poc/"),
+    dockerRepository in Docker := Some("113379206287.dkr.ecr.us-east-1.amazonaws.com/development/codebuild-poc"),
     dockerBaseImage :=  "openjdk:11.0.3-jdk-slim-stretch"
   )
 }
