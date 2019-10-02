@@ -13,6 +13,7 @@ lazy val orchestrator = (project in file("web-orchestrator"))
   .settings(
     name := "orchestrator",
     DockerSettings.general,
+    dockerRepository in Docker := Some("113379206287.dkr.ecr.us-east-1.amazonaws.com/development/codebuild-poc/"),
     libraryDependencies ++=  Seq(
       guice,
       ws
