@@ -17,7 +17,7 @@ lazy val orchestrator = (project in file("web-orchestrator"))
       guice,
       ws
     )
-  )
+  ).dependsOn(common % "compile->compile;test->test")
 
 
 lazy val worker = (project in file("web-worker"))
