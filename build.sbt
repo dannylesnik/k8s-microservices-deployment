@@ -13,11 +13,11 @@ lazy val orchestrator = (project in file("web-orchestrator"))
   .settings(
     name := "orchestrator",
     DockerSettings.general,
-    packageName in Docker := (dockerRepository in Docker).value+ "/"+name.value,
+    libraryDependencies ++=  Seq(
       guice,
       ws
     )
-  ).dependsOn(common % "compile->compile;test->test")
+  )
 
 
 lazy val worker = (project in file("web-worker"))
@@ -25,13 +25,10 @@ lazy val worker = (project in file("web-worker"))
   .settings(
     name := "worker",
     DockerSettings.general,
-    packageName in Docker := (dockerRepository in Docker).value+ "/"+name.value,
     mainClass in Compile := Some("com.vanilla.poc.worker1.Main"),
     libraryDependencies += "com.typesafe.akka" %% "akka-http" % "10.1.8",
     libraryDependencies += "de.heikoseeberger" %% "akka-http-play-json" % "1.27.0",
       libraryDependencies += "com.typesafe.akka" %% "akka-stream" % "2.5.23", 
       libraryDependencies += "com.typesafe.play" %% "play-json" % "2.7.4"
-    
-  ).dependsOn(common % "compile->compile;test->test")
 
-
+  )
