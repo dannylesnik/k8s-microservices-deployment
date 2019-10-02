@@ -2,6 +2,8 @@ name := "k8s-microservices-deployment"
 
 version := "0.1"
 
+skip in publish := true
+
 scalaVersion := "2.13.0"
 
 javaOptions in Universal ++= Seq(
