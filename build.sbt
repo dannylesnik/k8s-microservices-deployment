@@ -32,5 +32,6 @@ lazy val worker = (project in file("web-worker"))
       libraryDependencies += "com.typesafe.akka" %% "akka-stream" % "2.5.23", 
       libraryDependencies += "com.typesafe.play" %% "play-json" % "2.7.4"
     
-  )
+  ).dependsOn(common % "compile->compile;test->test")
+
 
