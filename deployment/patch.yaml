@@ -22,7 +22,7 @@ spec:
         app: worker1
     spec:
       containers:
-        - image: dannylesnik/worker:latest
+        - image: 113379206287.dkr.ecr.us-east-1.amazonaws.com/development/codebuild-poc/worker:latest
           name: worker1
           readinessProbe:
             periodSeconds: 1
@@ -61,7 +61,7 @@ spec:
         app: worker2
     spec:
       containers:
-        - image: dannylesnik/worker:latest
+        - image: 113379206287.dkr.ecr.us-east-1.amazonaws.com/development/codebuild-poc/worker:latest
           name: worker2
           readinessProbe:
             periodSeconds: 1
@@ -100,7 +100,7 @@ spec:
         app: worker3
     spec:
       containers:
-        - image: dannylesnik/worker:latest
+        - image: 113379206287.dkr.ecr.us-east-1.amazonaws.com/development/codebuild-poc/worker:latest
           name: worker3
           readinessProbe:
             periodSeconds: 1
@@ -139,7 +139,7 @@ spec:
         app: worker4
     spec:
       containers:
-        - image: dannylesnik/worker:latest
+        - image: 113379206287.dkr.ecr.us-east-1.amazonaws.com/development/codebuild-poc/worker:latest
           name: worker4
           readinessProbe:
             periodSeconds: 1
@@ -180,7 +180,7 @@ spec:
         app: orchestrator
     spec:
       containers:
-        - image: dannylesnik/orchestrator:latest
+        - image: 113379206287.dkr.ecr.us-east-1.amazonaws.com/development/codebuild-poc/orchestrator:latest
           name: orchestrator
           volumeMounts:
             - mountPath: /opt/docker/conf/prod.conf

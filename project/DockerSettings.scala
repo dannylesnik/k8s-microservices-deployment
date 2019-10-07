@@ -8,7 +8,7 @@ object DockerSettings {
 
   lazy val general=  Seq(
     dockerBuildOptions += "--no-cache",
-    version in Docker := version.value,
+    //version in Docker := version.value,
     daemonUser in Docker := "root",
     dockerChmodType in Docker := DockerChmodType.UserGroupWriteExecute,
     dockerChmodType := DockerChmodType.UserGroupWriteExecute,

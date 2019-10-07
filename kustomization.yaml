@@ -1,0 +1,11 @@
+resources:
+- deployment/patch.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+images:
+- name: 113379206287.dkr.ecr.us-east-1.amazonaws.com/development/codebuild-poc/orchestrator
+  newName: 113379206287.dkr.ecr.us-east-1.amazonaws.com/development/codebuild-poc/orchestrator
+  newTag: 0.3.3.3-SNAPSHOT
+- name: 113379206287.dkr.ecr.us-east-1.amazonaws.com/development/codebuild-poc/worker
+  newName: 113379206287.dkr.ecr.us-east-1.amazonaws.com/development/codebuild-poc/worker
+  newTag: 0.3.3.3-SNAPSHOT
